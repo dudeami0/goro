@@ -75,7 +75,10 @@ func (l *Lexer) write(s string) (int, error) {
 }
 
 func (l *Lexer) NextItem() (*Item, error) {
-	i := <-l.items
+	var i *Item
+	if len(l.items) > 0 {
+		i = <-l.items
+	}
 	if i == nil {
 		// mh?
 		return &Item{Type: T_EOF}, nil
