@@ -7,13 +7,13 @@ if [ -d "test" ]; then
 fi
 
 if [ ! -d "wordpress" ]; then
-	if [ ! -f wordpress.tar.gz ]; then
+	if [ ! -f "wordpress.tar.gz" ]; then
 		echo "Downloading wordpress ..."
 		wget -q -O wordpress.tar.gz https://wordpress.org/latest.tar.gz
 	fi
 	echo "Extracting wordpress ..."
 	# assuming we are running linux
-	tar xf wordpress.tar.gz
+	tar --no-same-owner -xf wordpress.tar.gz
 	# leaving latest.tar.gz there because it won't hurt should we need to reset this wordpress
 fi
 
