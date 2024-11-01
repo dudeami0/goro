@@ -75,10 +75,7 @@ func (l *Lexer) write(s string) (int, error) {
 }
 
 func (l *Lexer) NextItem() (*Item, error) {
-	var i *Item
-	if len(l.items) > 0 {
-		i = <-l.items
-	}
+	i := <-l.items
 	if i == nil {
 		// mh?
 		return &Item{Type: T_EOF}, nil
@@ -265,8 +262,18 @@ func (l *Lexer) acceptRun(valid string) string {
 }
 
 func (l *Lexer) acceptUntil(s string) {
-	for strings.IndexRune(s, l.next()) == -1 {
+	// Rewrite for debugging, remove
+	for {
+		n := l.next()
+		i := strings.IndexRune(s, n)
+		if n == -1 || i != -1 {
+			break
+		}
 	}
+	// End rewrite, uncomment below
+	// for strings.IndexRune(s, l.next()) == -1 {
+	// 	// breakpoint
+	// }
 }
 
 func (l *Lexer) acceptUntilFixed(s string) {
