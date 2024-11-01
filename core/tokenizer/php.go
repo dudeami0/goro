@@ -25,7 +25,14 @@ func lexPhp(l *Lexer) lexState {
 				return lexPhpBlockComment
 			}
 			return lexPhpOperator
-		case '*', '+', '-', '&', '|', '^', '?', '>', '=', ':', '!', '@', '[', ']', '%', '~':
+		case '-':
+			v := l.peekString(2)
+			if len(v) == 2 && v[1] == '>' {
+				return lexPhpClassProperty
+			} else {
+				return lexPhpOperator
+			}
+		case '*', '+', '&', '|', '^', '?', '>', '=', ':', '!', '@', '[', ']', '%', '~':
 			return lexPhpOperator
 		case '.':
 			v := l.peekString(2)

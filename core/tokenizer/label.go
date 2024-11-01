@@ -115,3 +115,15 @@ func lexPhpString(l *Lexer) lexState {
 	}
 	return l.base
 }
+
+func lexPhpClassProperty(l *Lexer) lexState {
+	l.acceptFixed("->")
+	l.emit(T_OBJECT_OPERATOR)
+	l.acceptPhpLabel()
+	if l.peek() == '(' {
+		l.emit(T_STRING)
+	} else {
+		l.emit(T_VARIABLE)
+	}
+	return l.base
+}
